@@ -50,14 +50,13 @@ public class AuthServiceImpl implements AuthService {
                     .header("Content-Type", "application/json")
                     .body(jsonObject)
                     .asJson();
-            // System.out.println(httpResponse.getBody());
-            String token = String.valueOf(httpResponse.getBody());
+            // String token = String.valueOf(httpResponse.getBody());
+            boolean tokenResult = httpResponse.isSuccess();
             try {
-                if (!(token.length() > 150)) {
+                if (!tokenResult) {
                     throw new IncorrectCredentialsException();
                 } else {
                     System.out.println("Login Successfully!");
-                    System.out.println(token.substring(10, 170));
                 }
             } catch (Exception ex) {
                 System.out.println("Incorrect Credentials!");

@@ -10,6 +10,5 @@ public class Main {
 
         ClientInteractionService clientInteractionService = new ClientInteractionImpl();
         clientInteractionService.initInteraction();
-
     }
 }
