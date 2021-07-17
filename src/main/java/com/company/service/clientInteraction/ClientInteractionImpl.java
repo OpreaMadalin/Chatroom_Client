@@ -49,6 +49,8 @@ public class ClientInteractionImpl implements ClientInteractionService {
                     case VIEW_MESSAGES:
                         messageService.showAllMessagesFromChatroom();
                         break;
+                    case ADD_MESSAGE:
+                        messageService.addChatroomMessage();
                     case LOGOUT:
                         initInteraction();
                         break;
@@ -63,13 +65,14 @@ public class ClientInteractionImpl implements ClientInteractionService {
         System.out.println("List chatroom - press " + LIST_CHATROOMS);
         System.out.println("Update chatroom - press " + UPDATE_CHATROOM);
         System.out.println("Delete chatroom - press " + DELETE_CHATROOM);
-        System.out.println("Show chatroom messages- press " + VIEW_MESSAGES);
+        System.out.println("Add chatroom message - press " + ADD_MESSAGE);
+        System.out.println("Show chatroom messages - press " + VIEW_MESSAGES);
         System.out.println("For back - press " + LOGOUT);
 
         try {
             int action = Integer.parseInt(scanner.nextLine());
             if (action != ADD_CHATROOM && action != LIST_CHATROOMS && action != UPDATE_CHATROOM &&
-                    action != DELETE_CHATROOM && action != VIEW_MESSAGES && action != LOGOUT) {
+                    action != DELETE_CHATROOM && action != ADD_MESSAGE && action != VIEW_MESSAGES && action != LOGOUT) {
                 throw new InvalidClientInteractionException();
             }
             return action;

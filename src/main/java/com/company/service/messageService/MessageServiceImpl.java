@@ -16,9 +16,26 @@ public class MessageServiceImpl implements MessageService {
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void addMessage() {
+    public void addChatroomMessage() {
 
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("-- Insert Chatroom --");
+        jsonObject.put("chatroomName", scanner.nextLine());
+        System.out.println("-- Insert Message --");
+        jsonObject.put("messages", scanner.nextLine());
+
+        try {
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/addChatroomMessage")
+                    .header("Authorization", TOKEN)
+                    .header("Content-Type", "application/json")
+                    .body(jsonObject)
+                    .asJson();
+
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public void showAllMessagesFromChatroom() {
