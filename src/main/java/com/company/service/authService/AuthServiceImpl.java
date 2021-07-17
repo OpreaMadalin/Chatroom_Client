@@ -51,6 +51,7 @@ public class AuthServiceImpl implements AuthService {
                     .body(jsonObject)
                     .asJson();
             // String token = String.valueOf(httpResponse.getBody());
+            // System.out.println(token);
             boolean tokenResult = httpResponse.isSuccess();
             try {
                 if (!tokenResult) {
