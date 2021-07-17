@@ -15,5 +15,5 @@ public class Constants {
 
     public static final int LOGOUT = 0;
 
-    public static final String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNYWRhbGluIiwiY2xhaW1zIjoibWFkYWxpbm9wcmVhLiIsImV4cCI6MTYyNjQ0Nzg3OX0.T4WYwjChMhNdDMMXTC457WBweIh-hwUo4f-pKie7ff8";
+    public static final String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNYWRhbGluIiwiZXhwIjoxNjI2NTE0ODk4LCJ1c2VybmFtZSI6Im1hZGFsaW5vcHJlYSJ9.c2BLstIP3058wmDp9jHAOlrouTPDRg86BIgrNKDFed4";
 }

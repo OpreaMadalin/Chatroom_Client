@@ -1,8 +1,10 @@
 package com.company.service.chatroomService;
 
 import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
+import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 
 import java.util.Scanner;
@@ -17,11 +19,17 @@ public class ChatroomServiceImpl implements ChatroomService {
     public void getChatrooms() {
 
         try {
-            HttpResponse<String> httpResponse = Unirest.get("http://localhost:8080/chatrooms")
+            HttpResponse<JsonNode> httpResponse = Unirest.get("http://localhost:8080/chatrooms")
                     .header("Authorization", TOKEN)
-                    .asString();
-            String chatrooms = httpResponse.getBody();
-            System.out.println(chatrooms);
+                    .asJson();
+
+            JSONObject cht = httpResponse.getBody().getObject();
+            JSONArray arr = cht.getJSONArray("chatrooms");
+
+            for (int i = 0; i < arr.length(); i++) {
+                String chatroom = arr.getString(i);
+                System.out.println("Chatroom Name: " + chatroom);
+            }
         } catch (UnirestException e) {
             e.printStackTrace();
         }
@@ -33,10 +41,10 @@ public class ChatroomServiceImpl implements ChatroomService {
 
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom --");
-        jsonObject.put("name", scanner.nextLine());
+        jsonObject.put("chatroomName", scanner.nextLine());
 
         try {
-            HttpResponse httpResponse = Unirest.post("http://localhost:8080/chatrooms")
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/chatrooms")
                     .header("Content-Type", "application/json")
                     .header("Authorization", TOKEN)
                     .body(jsonObject)
@@ -58,10 +66,10 @@ public class ChatroomServiceImpl implements ChatroomService {
 
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom --");
-        jsonObject.put("name", scanner.nextLine());
+        jsonObject.put("chatroomName", scanner.nextLine());
 
         try {
-            HttpResponse httpResponse = Unirest.delete("http://localhost:8080/chatrooms")
+            HttpResponse<JsonNode> httpResponse = Unirest.delete("http://localhost:8080/chatrooms")
                     .header("Content-Type", "application/json")
                     .header("Authorization", TOKEN)
                     .body(jsonObject)

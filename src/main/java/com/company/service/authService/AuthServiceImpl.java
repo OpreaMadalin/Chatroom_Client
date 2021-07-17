@@ -3,6 +3,7 @@ package com.company.service.authService;
 
 import com.company.service.exception.IncorrectCredentialsException;
 import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
 import kong.unirest.json.JSONObject;
@@ -24,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse httpResponse = Unirest.post("http://localhost:8080/register")
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/register")
                     .header("Content-Type", "application/json")
                     .body(jsonObject)
                     .asJson();
