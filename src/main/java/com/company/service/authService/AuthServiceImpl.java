@@ -1,6 +1,6 @@
 package com.company.service.authService;
 
-
+import com.company.service.clientInteraction.ClientRegisterLoginImpl;
 import com.company.service.exception.IncorrectCredentialsException;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
@@ -13,7 +13,9 @@ import java.util.Scanner;
 
 public class AuthServiceImpl implements AuthService {
 
+    public static String token;
     private final Scanner scanner = new Scanner(System.in);
+
 
     @Override
     public void register() {
@@ -47,21 +49,23 @@ public class AuthServiceImpl implements AuthService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse httpResponse = Unirest.post("http://localhost:8080/login")
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/login")
                     .header("Content-Type", "application/json")
                     .body(jsonObject)
                     .asJson();
-            // String token = String.valueOf(httpResponse.getBody());
-            // System.out.println(token);
+
             boolean tokenResult = httpResponse.isSuccess();
             try {
                 if (!tokenResult) {
                     throw new IncorrectCredentialsException();
                 } else {
+                    token = String.valueOf(httpResponse.getBody().getObject().get("token"));
                     System.out.println("Login Successfully!");
                 }
             } catch (Exception ex) {
                 System.out.println("Incorrect Credentials!");
+                ClientRegisterLoginImpl clientRegisterLogin = new ClientRegisterLoginImpl();
+                clientRegisterLogin.initInteraction();
             }
         } catch (UnirestException e) {
             e.printStackTrace();
@@ -69,4 +73,7 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
+    public static String getToken() {
+        return token;
+    }
 }

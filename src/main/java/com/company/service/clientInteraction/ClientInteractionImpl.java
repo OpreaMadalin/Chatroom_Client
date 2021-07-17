@@ -23,40 +23,37 @@ public class ClientInteractionImpl implements ClientInteractionService {
     @Override
     public void initInteraction() {
 
-        switch (chooseInitialAction()) {
-            case REGISTER:
-                authService.register();
-                break;
+        switch (choseChatroomsAction()) {
+            case ADD_CHATROOM:
+                chatroomService.addChatroom();
 
-            case LOGIN:
-                authService.login();
                 break;
+            case LIST_CHATROOMS:
+                chatroomService.getChatrooms();
 
-            case CHATROOMS_MANAGEMENT:
-                switch (choseChatroomsAction()) {
-                    case ADD_CHATROOM:
-                        chatroomService.addChatroom();
-                        break;
-                    case LIST_CHATROOMS:
-                        chatroomService.getChatrooms();
-                        break;
-                    case UPDATE_CHATROOM:
-                        System.out.println("Update chatroom");
-                        break;
-                    case DELETE_CHATROOM:
-                        chatroomService.deleteChatroom();
-                        break;
-                    case VIEW_MESSAGES:
-                        messageService.showAllMessagesFromChatroom();
-                        break;
-                    case ADD_MESSAGE:
-                        messageService.addChatroomMessage();
-                    case LOGOUT:
-                        initInteraction();
-                        break;
-                }
+                break;
+            case UPDATE_CHATROOM:
+                System.out.println("Update chatroom");
+
+                break;
+            case DELETE_CHATROOM:
+                chatroomService.deleteChatroom();
+
+                break;
+            case VIEW_MESSAGES:
+                messageService.showAllMessagesFromChatroom();
+
+                break;
+            case ADD_MESSAGE:
+                messageService.addChatroomMessage();
+
+                break;
+            case LOGOUT:
+                ClientRegisterLoginImpl registerLogin = new ClientRegisterLoginImpl();
+                registerLogin.initInteraction();
                 break;
         }
+
         initInteraction();
     }
 
@@ -67,7 +64,7 @@ public class ClientInteractionImpl implements ClientInteractionService {
         System.out.println("Delete chatroom - press " + DELETE_CHATROOM);
         System.out.println("Add chatroom message - press " + ADD_MESSAGE);
         System.out.println("Show chatroom messages - press " + VIEW_MESSAGES);
-        System.out.println("For back - press " + LOGOUT);
+        System.out.println("For logout - press " + LOGOUT);
 
         try {
             int action = Integer.parseInt(scanner.nextLine());
@@ -82,24 +79,4 @@ public class ClientInteractionImpl implements ClientInteractionService {
         return choseChatroomsAction();
     }
 
-
-    private Integer chooseInitialAction() {
-
-        System.out.println("Choose action: ");
-        System.out.println("Register - press " + REGISTER);
-        System.out.println("Login - press " + LOGIN);
-        System.out.println("Chatrooms - press " + CHATROOMS_MANAGEMENT);
-
-        try {
-            int action = Integer.parseInt(scanner.nextLine());
-            if (action != REGISTER && action != LOGIN && action != CHATROOMS_MANAGEMENT) {
-                throw new InvalidClientInteractionException();
-            }
-            return action;
-        } catch (Exception ex) {
-            System.out.println("Please enter a valid number: " + REGISTER + " (REGISTER) " +
-                    " or " + LOGIN + " (LOGIN) " + " or " + CHATROOMS_MANAGEMENT + " (CHATROOMS)!");
-        }
-        return chooseInitialAction();
-    }
 }

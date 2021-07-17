@@ -1,5 +1,6 @@
 package com.company.service.messageService;
 
+import com.company.service.authService.TokenService;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
@@ -9,7 +10,6 @@ import kong.unirest.json.JSONObject;
 
 import java.util.Scanner;
 
-import static com.company.util.Constants.TOKEN;
 
 public class MessageServiceImpl implements MessageService {
 
@@ -26,16 +26,20 @@ public class MessageServiceImpl implements MessageService {
 
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/addChatroomMessage")
-                    .header("Authorization", TOKEN)
+                    .header("Authorization", TokenService.getToken())
                     .header("Content-Type", "application/json")
                     .body(jsonObject)
                     .asJson();
-
+            boolean status = httpResponse.isSuccess();
+            if (status) {
+                System.out.println("Send!");
+            } else {
+                System.out.println("Message Not Send!");
+            }
         } catch (UnirestException e) {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void showAllMessagesFromChatroom() {
@@ -46,22 +50,29 @@ public class MessageServiceImpl implements MessageService {
 
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/getChatroomMessages")
-                    .header("Authorization", TOKEN)
+                    .header("Authorization", TokenService.getToken())
                     .header("Content-Type", "application/json")
                     .body(jsonObject)
                     .asJson();
 
-            JSONObject msg = httpResponse.getBody().getObject();
+            boolean status = httpResponse.isSuccess();
+            if (status) {
+                JSONObject msg = httpResponse.getBody().getObject();
 
-            JSONArray arr = msg.getJSONArray("chatroomMessages");
+                JSONArray arr = msg.getJSONArray("chatroomMessages");
 
-            for (int i = 0; i < arr.length(); i++) {
-                String timestamp = arr.getJSONObject(i).getString("timestamp");
-                String username = arr.getJSONObject(i).getString("username");
-                String message = arr.getJSONObject(i).getString("message");
+                for (int i = 0; i < arr.length(); i++) {
+                    String timestamp = arr.getJSONObject(i).getString("timestamp");
+                    String username = arr.getJSONObject(i).getString("username");
+                    String message = arr.getJSONObject(i).getString("message");
 
-                System.out.println("Date: " + timestamp + " Sender: " + username + " Message: " + message);
+                    System.out.println("Date: " + timestamp + " Sender: " + username + " Message: " + message);
+                }
+
+            } else {
+                System.out.println("Unsuccessful Request!");
             }
+
 
         } catch (UnirestException e) {
             e.printStackTrace();

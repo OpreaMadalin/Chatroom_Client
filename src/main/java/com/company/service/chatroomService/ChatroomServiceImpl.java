@@ -1,5 +1,6 @@
 package com.company.service.chatroomService;
 
+import com.company.service.authService.TokenService;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
@@ -9,7 +10,6 @@ import kong.unirest.json.JSONObject;
 
 import java.util.Scanner;
 
-import static com.company.util.Constants.TOKEN;
 
 public class ChatroomServiceImpl implements ChatroomService {
 
@@ -20,15 +20,20 @@ public class ChatroomServiceImpl implements ChatroomService {
 
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.get("http://localhost:8080/chatrooms")
-                    .header("Authorization", TOKEN)
+                    .header("Authorization", TokenService.getToken())
                     .asJson();
 
-            JSONObject cht = httpResponse.getBody().getObject();
-            JSONArray arr = cht.getJSONArray("chatrooms");
+            boolean getChat = httpResponse.isSuccess();
+            if (getChat) {
+                JSONObject cht = httpResponse.getBody().getObject();
+                JSONArray arr = cht.getJSONArray("chatrooms");
 
-            for (int i = 0; i < arr.length(); i++) {
-                String chatroom = arr.getString(i);
-                System.out.println("Chatroom Name: " + chatroom);
+                for (int i = 0; i < arr.length(); i++) {
+                    String chatroom = arr.getString(i);
+                    System.out.println("Chatroom Name: " + chatroom);
+                }
+            } else {
+                System.out.println("Unsuccessful Request!");
             }
         } catch (UnirestException e) {
             e.printStackTrace();
@@ -46,14 +51,14 @@ public class ChatroomServiceImpl implements ChatroomService {
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/chatrooms")
                     .header("Content-Type", "application/json")
-                    .header("Authorization", TOKEN)
+                    .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
                     .asJson();
             boolean addCht = httpResponse.isSuccess();
             if (addCht) {
                 System.out.println("Chatroom Successfully Added!");
             } else {
-                System.out.println("Chatroom Not Added");
+                System.out.println("Chatroom Not Added!");
             }
         } catch (UnirestException e) {
             e.printStackTrace();
@@ -71,7 +76,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.delete("http://localhost:8080/chatrooms")
                     .header("Content-Type", "application/json")
-                    .header("Authorization", TOKEN)
+                    .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
                     .asJson();
             boolean addCht = httpResponse.isSuccess();
