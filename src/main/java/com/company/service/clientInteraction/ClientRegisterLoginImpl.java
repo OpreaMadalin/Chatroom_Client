@@ -22,6 +22,7 @@ public class ClientRegisterLoginImpl implements ClientInteractionService {
                 authService.register();
                 initInteraction();
                 break;
+
             case LOGIN:
                 authService.login();
                 break;

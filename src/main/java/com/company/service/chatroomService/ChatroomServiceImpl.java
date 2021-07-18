@@ -23,8 +23,8 @@ public class ChatroomServiceImpl implements ChatroomService {
                     .header("Authorization", TokenService.getToken())
                     .asJson();
 
-            boolean getChat = httpResponse.isSuccess();
-            if (getChat) {
+            boolean getCht = httpResponse.isSuccess();
+            if (getCht) {
                 JSONObject cht = httpResponse.getBody().getObject();
                 JSONArray arr = cht.getJSONArray("chatrooms");
 
@@ -79,8 +79,8 @@ public class ChatroomServiceImpl implements ChatroomService {
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
                     .asJson();
-            boolean addCht = httpResponse.isSuccess();
-            if (addCht) {
+            boolean deleteCht = httpResponse.isSuccess();
+            if (deleteCht) {
                 System.out.println("Chatroom Successfully Deleted!");
             } else {
                 System.out.println("Chatroom Not Deleted Or Not Exist!");
@@ -93,6 +93,28 @@ public class ChatroomServiceImpl implements ChatroomService {
 
     @Override
     public void updateChatroom() {
+
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("-- Insert Chatroom Name--");
+        jsonObject.put("chatroomName", scanner.nextLine());
+        System.out.println("-- Insert New Chatroom Name--");
+        jsonObject.put("newChatroomName", scanner.nextLine());
+
+        try {
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/updateChatroom")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", TokenService.getToken())
+                    .body(jsonObject)
+                    .asJson();
+            boolean updateCht = httpResponse.isSuccess();
+            if (updateCht) {
+                System.out.println("Chatroom Successfully Renamed !");
+            } else {
+                System.out.println("Chatroom Not Renamed Or Not Exist!");
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
 
     }
 }

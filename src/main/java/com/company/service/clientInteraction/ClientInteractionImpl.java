@@ -1,7 +1,5 @@
 package com.company.service.clientInteraction;
 
-import com.company.service.authService.AuthService;
-import com.company.service.authService.AuthServiceImpl;
 import com.company.service.chatroomService.ChatroomService;
 import com.company.service.chatroomService.ChatroomServiceImpl;
 import com.company.service.exception.InvalidClientInteractionException;
@@ -15,8 +13,6 @@ import static com.company.util.Constants.*;
 public class ClientInteractionImpl implements ClientInteractionService {
 
     private final Scanner scanner = new Scanner(System.in);
-
-    AuthService authService = new AuthServiceImpl();
     ChatroomService chatroomService = new ChatroomServiceImpl();
     MessageService messageService = new MessageServiceImpl();
 
@@ -26,28 +22,28 @@ public class ClientInteractionImpl implements ClientInteractionService {
         switch (choseChatroomsAction()) {
             case ADD_CHATROOM:
                 chatroomService.addChatroom();
-
                 break;
+
             case LIST_CHATROOMS:
                 chatroomService.getChatrooms();
-
                 break;
+
             case UPDATE_CHATROOM:
-                System.out.println("Update chatroom");
-
+                chatroomService.updateChatroom();
                 break;
+
             case DELETE_CHATROOM:
                 chatroomService.deleteChatroom();
 
                 break;
             case VIEW_MESSAGES:
                 messageService.showAllMessagesFromChatroom();
-
                 break;
+
             case ADD_MESSAGE:
                 messageService.addChatroomMessage();
-
                 break;
+
             case LOGOUT:
                 ClientRegisterLoginImpl registerLogin = new ClientRegisterLoginImpl();
                 registerLogin.initInteraction();
@@ -58,6 +54,7 @@ public class ClientInteractionImpl implements ClientInteractionService {
     }
 
     private Integer choseChatroomsAction() {
+
         System.out.println("Add chatroom - press " + ADD_CHATROOM);
         System.out.println("List chatroom - press " + LIST_CHATROOMS);
         System.out.println("Update chatroom - press " + UPDATE_CHATROOM);
