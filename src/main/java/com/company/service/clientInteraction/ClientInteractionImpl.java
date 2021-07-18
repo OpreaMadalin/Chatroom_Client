@@ -28,14 +28,18 @@ public class ClientInteractionImpl implements ClientInteractionService {
                 chatroomService.getChatrooms();
                 break;
 
-            case UPDATE_CHATROOM:
-                chatroomService.updateChatroom();
-                break;
-
             case DELETE_CHATROOM:
                 chatroomService.deleteChatroom();
-
                 break;
+
+            case UPDATE_CHATROOM_NAME:
+                chatroomService.updateChatroomName();
+                break;
+
+            case UPDATE_CHATROOM_PASSWORD:
+                chatroomService.updateChatroomPassword();
+                break;
+
             case VIEW_MESSAGES:
                 messageService.showAllMessagesFromChatroom();
                 break;
@@ -55,18 +59,24 @@ public class ClientInteractionImpl implements ClientInteractionService {
 
     private Integer choseChatroomsAction() {
 
+        System.out.println("-------- CHATROOM MANAGEMENT -------");
         System.out.println("Add chatroom - press " + ADD_CHATROOM);
         System.out.println("List chatroom - press " + LIST_CHATROOMS);
-        System.out.println("Update chatroom - press " + UPDATE_CHATROOM);
         System.out.println("Delete chatroom - press " + DELETE_CHATROOM);
+        System.out.println("Update chatroom name - press " + UPDATE_CHATROOM_NAME);
+        System.out.println("Update chatroom password - press " + UPDATE_CHATROOM_PASSWORD);
+        System.out.println("-------- MESSAGE MANAGEMENT --------");
         System.out.println("Add chatroom message - press " + ADD_MESSAGE);
         System.out.println("Show chatroom messages - press " + VIEW_MESSAGES);
+        System.out.println("-------------- LOGOUT --------------");
         System.out.println("For logout - press " + LOGOUT);
+        System.out.println("------------------------------------");
 
         try {
             int action = Integer.parseInt(scanner.nextLine());
-            if (action != ADD_CHATROOM && action != LIST_CHATROOMS && action != UPDATE_CHATROOM &&
-                    action != DELETE_CHATROOM && action != ADD_MESSAGE && action != VIEW_MESSAGES && action != LOGOUT) {
+            if (action != ADD_CHATROOM && action != LIST_CHATROOMS && action != UPDATE_CHATROOM_NAME &&
+                    action != UPDATE_CHATROOM_PASSWORD && action != DELETE_CHATROOM && action != ADD_MESSAGE &&
+                    action != VIEW_MESSAGES && action != LOGOUT) {
                 throw new InvalidClientInteractionException();
             }
             return action;

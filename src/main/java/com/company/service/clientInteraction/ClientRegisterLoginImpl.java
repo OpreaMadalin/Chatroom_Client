@@ -18,32 +18,34 @@ public class ClientRegisterLoginImpl implements ClientInteractionService {
     public void initInteraction() {
 
         switch (chooseInitialAction()) {
+            case LOGIN:
+                authService.login();
+                break;
+
             case REGISTER:
                 authService.register();
                 initInteraction();
-                break;
-
-            case LOGIN:
-                authService.login();
                 break;
         }
     }
 
     private Integer chooseInitialAction() {
 
+        System.out.println("--- MADALIN CHATROOM ---");
         System.out.println("Choose action: ");
-        System.out.println("Register - press " + REGISTER);
         System.out.println("Login - press " + LOGIN);
+        System.out.println("Register - press " + REGISTER);
+        System.out.println("------------------------");
 
         try {
             int action = Integer.parseInt(scanner.nextLine());
-            if (action != REGISTER && action != LOGIN) {
+            if (action != LOGIN && action != REGISTER) {
                 throw new InvalidClientInteractionException();
             }
             return action;
         } catch (Exception ex) {
-            System.out.println("Please enter a valid number: " + REGISTER + " (REGISTER) " +
-                    " or " + LOGIN + " (LOGIN) ");
+            System.out.println("Please enter a valid number: " + LOGIN + " (LOGIN) " +
+                    " or " + REGISTER + " (REGISTER) ");
         }
         return chooseInitialAction();
     }

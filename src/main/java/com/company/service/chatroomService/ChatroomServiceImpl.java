@@ -15,31 +15,6 @@ public class ChatroomServiceImpl implements ChatroomService {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    @Override
-    public void getChatrooms() {
-
-        try {
-            HttpResponse<JsonNode> httpResponse = Unirest.get("http://localhost:8080/chatrooms")
-                    .header("Authorization", TokenService.getToken())
-                    .asJson();
-
-            boolean getCht = httpResponse.isSuccess();
-            if (getCht) {
-                JSONObject cht = httpResponse.getBody().getObject();
-                JSONArray arr = cht.getJSONArray("chatrooms");
-
-                for (int i = 0; i < arr.length(); i++) {
-                    String chatroom = arr.getString(i);
-                    System.out.println("Chatroom Name: " + chatroom);
-                }
-            } else {
-                System.out.println("Unsuccessful Request!");
-            }
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     public void addChatroom() {
@@ -69,6 +44,33 @@ public class ChatroomServiceImpl implements ChatroomService {
     }
 
     @Override
+    public void getChatrooms() {
+
+        try {
+            HttpResponse<JsonNode> httpResponse = Unirest.get("http://localhost:8080/chatrooms")
+                    .header("Authorization", TokenService.getToken())
+                    .asJson();
+
+            boolean getCht = httpResponse.isSuccess();
+            if (getCht) {
+                JSONObject cht = httpResponse.getBody().getObject();
+                JSONArray arr = cht.getJSONArray("chatrooms");
+
+                for (int i = 0; i < arr.length(); i++) {
+                    String chatroom = arr.getString(i);
+                    System.out.println("Chatroom Name: " + chatroom);
+                }
+            } else {
+                System.out.println("Unsuccessful Request!");
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Override
     public void deleteChatroom() {
 
         JSONObject jsonObject = new JSONObject();
@@ -96,7 +98,7 @@ public class ChatroomServiceImpl implements ChatroomService {
     }
 
     @Override
-    public void updateChatroom() {
+    public void updateChatroomName() {
 
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom Name--");
@@ -107,7 +109,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/updateChatroom")
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/updateChatroomName")
                     .header("Content-Type", "application/json")
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
@@ -122,5 +124,33 @@ public class ChatroomServiceImpl implements ChatroomService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void updateChatroomPassword() {
+
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("-- Insert Chatroom Name--");
+        jsonObject.put("chatroomName", scanner.nextLine());
+        System.out.println("-- Insert Old Password--");
+        jsonObject.put("password", scanner.nextLine());
+        System.out.println("-- Insert New Password--");
+        jsonObject.put("newPassword", scanner.nextLine());
+
+        try {
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/updateChatroomPassword")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", TokenService.getToken())
+                    .body(jsonObject)
+                    .asJson();
+            boolean updateChtName = httpResponse.isSuccess();
+            if (updateChtName) {
+                System.out.println("Chatroom Password Successfully Changed!");
+            } else {
+                System.out.println("Chatroom Password Not Changed!");
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
     }
 }
