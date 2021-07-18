@@ -31,8 +31,10 @@ public class AuthServiceImpl implements AuthService {
                     .header("Content-Type", "application/json")
                     .body(jsonObject)
                     .asJson();
+
             System.out.println("Register Successfully!");
-            System.out.println(httpResponse.getBody());
+            String userId = httpResponse.getBody().getObject().getString("registeredID");
+            System.out.println("User ID: " + userId);
         } catch (UnirestException e) {
             e.printStackTrace();
         }

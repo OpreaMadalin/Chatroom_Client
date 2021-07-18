@@ -23,6 +23,8 @@ public class MessageServiceImpl implements MessageService {
         jsonObject.put("chatroomName", scanner.nextLine());
         System.out.println("-- Insert Message --");
         jsonObject.put("messages", scanner.nextLine());
+        System.out.println("-- Insert Chatroom Password --");
+        jsonObject.put("password", scanner.nextLine());
 
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/addChatroomMessage")
@@ -47,6 +49,8 @@ public class MessageServiceImpl implements MessageService {
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom --");
         jsonObject.put("chatroomName", scanner.nextLine());
+        System.out.println("-- Insert Chatroom Password --");
+        jsonObject.put("password", scanner.nextLine());
 
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/getChatroomMessages")

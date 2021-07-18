@@ -45,8 +45,10 @@ public class ChatroomServiceImpl implements ChatroomService {
     public void addChatroom() {
 
         JSONObject jsonObject = new JSONObject();
-        System.out.println("-- Insert Chatroom --");
+        System.out.println("-- Insert Chatroom Name--");
         jsonObject.put("chatroomName", scanner.nextLine());
+        System.out.println("-- Insert Password For Chatroom --");
+        jsonObject.put("password", scanner.nextLine());
 
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/chatrooms")
@@ -72,6 +74,8 @@ public class ChatroomServiceImpl implements ChatroomService {
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom --");
         jsonObject.put("chatroomName", scanner.nextLine());
+        System.out.println("-- Insert Chatroom Password--");
+        jsonObject.put("password", scanner.nextLine());
 
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.delete("http://localhost:8080/chatrooms")
@@ -99,6 +103,8 @@ public class ChatroomServiceImpl implements ChatroomService {
         jsonObject.put("chatroomName", scanner.nextLine());
         System.out.println("-- Insert New Chatroom Name--");
         jsonObject.put("newChatroomName", scanner.nextLine());
+        System.out.println("-- Insert Chatroom Password--");
+        jsonObject.put("password", scanner.nextLine());
 
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/updateChatroom")
