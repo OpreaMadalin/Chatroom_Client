@@ -22,7 +22,7 @@ public class MessageServiceImpl implements MessageService {
         System.out.println("-- Insert Chatroom --");
         jsonObject.put("chatroomName", scanner.nextLine());
         System.out.println("-- Insert Message --");
-        jsonObject.put("messages", scanner.nextLine());
+        jsonObject.put("message", scanner.nextLine());
         System.out.println("-- Insert Chatroom Password --");
         jsonObject.put("password", scanner.nextLine());
 
@@ -44,7 +44,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void showAllMessagesFromChatroom() {
+    public void showChatroomMessages() {
 
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom --");

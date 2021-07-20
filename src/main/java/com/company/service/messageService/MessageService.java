@@ -4,6 +4,6 @@ public interface MessageService {
 
     void addChatroomMessage();
 
-    void showAllMessagesFromChatroom();
+    void showChatroomMessages();
 
 }

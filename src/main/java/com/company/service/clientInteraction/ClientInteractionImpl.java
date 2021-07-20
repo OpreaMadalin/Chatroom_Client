@@ -41,11 +41,19 @@ public class ClientInteractionImpl implements ClientInteractionService {
                 break;
 
             case VIEW_MESSAGES:
-                messageService.showAllMessagesFromChatroom();
+                messageService.showChatroomMessages();
                 break;
 
             case ADD_MESSAGE:
                 messageService.addChatroomMessage();
+                break;
+
+            case ADD_ADMIN:
+                chatroomService.addAdmin();
+                break;
+
+            case BAN_USER:
+                chatroomService.addBannedUser();
                 break;
 
             case LOGOUT:
@@ -68,6 +76,9 @@ public class ClientInteractionImpl implements ClientInteractionService {
         System.out.println("-------- MESSAGE MANAGEMENT --------");
         System.out.println("Add chatroom message - press " + ADD_MESSAGE);
         System.out.println("Show chatroom messages - press " + VIEW_MESSAGES);
+        System.out.println("-------- USERS MANAGEMENT --------");
+        System.out.println("Add chatroom admin - press " + ADD_ADMIN);
+        System.out.println("Add chatroom banned user - press " + BAN_USER);
         System.out.println("-------------- LOGOUT --------------");
         System.out.println("For logout - press " + LOGOUT);
         System.out.println("------------------------------------");
@@ -76,7 +87,7 @@ public class ClientInteractionImpl implements ClientInteractionService {
             int action = Integer.parseInt(scanner.nextLine());
             if (action != ADD_CHATROOM && action != LIST_CHATROOMS && action != UPDATE_CHATROOM_NAME &&
                     action != UPDATE_CHATROOM_PASSWORD && action != DELETE_CHATROOM && action != ADD_MESSAGE &&
-                    action != VIEW_MESSAGES && action != LOGOUT) {
+                    action != VIEW_MESSAGES && action != ADD_ADMIN && action != BAN_USER && action != LOGOUT) {
                 throw new InvalidClientInteractionException();
             }
             return action;

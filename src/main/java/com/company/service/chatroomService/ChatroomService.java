@@ -11,4 +11,8 @@ public interface ChatroomService {
     void updateChatroomName();
 
     void updateChatroomPassword();
+
+    void addAdmin();
+
+    void addBannedUser();
 }

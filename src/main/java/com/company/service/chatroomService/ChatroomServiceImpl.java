@@ -20,13 +20,13 @@ public class ChatroomServiceImpl implements ChatroomService {
     public void addChatroom() {
 
         JSONObject jsonObject = new JSONObject();
-        System.out.println("-- Insert Chatroom Name--");
+        System.out.println("-- Insert Chatroom Name --");
         jsonObject.put("chatroomName", scanner.nextLine());
         System.out.println("-- Insert Password For Chatroom --");
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/chatrooms")
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/addChatroom")
                     .header("Content-Type", "application/json")
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
@@ -47,7 +47,7 @@ public class ChatroomServiceImpl implements ChatroomService {
     public void getChatrooms() {
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.get("http://localhost:8080/chatrooms")
+            HttpResponse<JsonNode> httpResponse = Unirest.get("http://localhost:8080/getChatrooms")
                     .header("Authorization", TokenService.getToken())
                     .asJson();
 
@@ -76,11 +76,11 @@ public class ChatroomServiceImpl implements ChatroomService {
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom --");
         jsonObject.put("chatroomName", scanner.nextLine());
-        System.out.println("-- Insert Chatroom Password--");
+        System.out.println("-- Insert Chatroom Password --");
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.delete("http://localhost:8080/chatrooms")
+            HttpResponse<JsonNode> httpResponse = Unirest.delete("http://localhost:8080/deleteChatroom")
                     .header("Content-Type", "application/json")
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
@@ -89,7 +89,7 @@ public class ChatroomServiceImpl implements ChatroomService {
             if (deleteCht) {
                 System.out.println("Chatroom Successfully Deleted!");
             } else {
-                System.out.println("Chatroom Not Deleted Or Not Exist!");
+                System.out.println("Chatroom Not Deleted!");
             }
         } catch (UnirestException e) {
             e.printStackTrace();
@@ -101,11 +101,11 @@ public class ChatroomServiceImpl implements ChatroomService {
     public void updateChatroomName() {
 
         JSONObject jsonObject = new JSONObject();
-        System.out.println("-- Insert Chatroom Name--");
+        System.out.println("-- Insert Chatroom Name --");
         jsonObject.put("chatroomName", scanner.nextLine());
-        System.out.println("-- Insert New Chatroom Name--");
+        System.out.println("-- Insert New Chatroom Name --");
         jsonObject.put("newChatroomName", scanner.nextLine());
-        System.out.println("-- Insert Chatroom Password--");
+        System.out.println("-- Insert Chatroom Password --");
         jsonObject.put("password", scanner.nextLine());
 
         try {
@@ -116,9 +116,9 @@ public class ChatroomServiceImpl implements ChatroomService {
                     .asJson();
             boolean updateCht = httpResponse.isSuccess();
             if (updateCht) {
-                System.out.println("Chatroom Successfully Renamed !");
+                System.out.println("Chatroom Successfully Renamed!");
             } else {
-                System.out.println("Chatroom Not Renamed Or Not Exist!");
+                System.out.println("Chatroom Not Renamed!");
             }
         } catch (UnirestException e) {
             e.printStackTrace();
@@ -130,11 +130,11 @@ public class ChatroomServiceImpl implements ChatroomService {
     public void updateChatroomPassword() {
 
         JSONObject jsonObject = new JSONObject();
-        System.out.println("-- Insert Chatroom Name--");
+        System.out.println("-- Insert Chatroom Name --");
         jsonObject.put("chatroomName", scanner.nextLine());
-        System.out.println("-- Insert Old Password--");
+        System.out.println("-- Insert Old Password --");
         jsonObject.put("password", scanner.nextLine());
-        System.out.println("-- Insert New Password--");
+        System.out.println("-- Insert New Password --");
         jsonObject.put("newPassword", scanner.nextLine());
 
         try {
@@ -153,4 +153,57 @@ public class ChatroomServiceImpl implements ChatroomService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void addAdmin() {
+
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("-- Insert Chatroom Name --");
+        jsonObject.put("chatroomName", scanner.nextLine());
+        System.out.println("-- Insert Admin Name --");
+        jsonObject.put("adminName", scanner.nextLine());
+
+        try {
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/addAdmin")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", TokenService.getToken())
+                    .body(jsonObject)
+                    .asJson();
+            boolean addAdmin = httpResponse.isSuccess();
+            if (addAdmin) {
+                System.out.println("Successfully Added!");
+            } else {
+                System.out.println("Not Added!");
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void addBannedUser() {
+
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("-- Insert Chatroom Name --");
+        jsonObject.put("chatroomName", scanner.nextLine());
+        System.out.println("-- Insert A User To Be Banned --");
+        jsonObject.put("bannedUser", scanner.nextLine());
+
+        try {
+            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/banUser")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", TokenService.getToken())
+                    .body(jsonObject)
+                    .asJson();
+            boolean addAdmin = httpResponse.isSuccess();
+            if (addAdmin) {
+                System.out.println("Successfully Added!");
+            } else {
+                System.out.println("Not Added!");
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
