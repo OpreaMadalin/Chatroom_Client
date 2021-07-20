@@ -1,14 +1,14 @@
 package com.company.service.clientInteraction;
 
+import com.company.exceptions.InvalidClientInteractionException;
 import com.company.service.chatroomService.ChatroomService;
 import com.company.service.chatroomService.ChatroomServiceImpl;
-import com.company.service.exception.InvalidClientInteractionException;
 import com.company.service.messageService.MessageService;
 import com.company.service.messageService.MessageServiceImpl;
 
 import java.util.Scanner;
 
-import static com.company.util.Constants.*;
+import static com.company.util.constants.Chatroom.*;
 
 public class ClientInteractionImpl implements ClientInteractionService {
 

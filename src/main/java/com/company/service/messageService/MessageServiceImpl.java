@@ -1,6 +1,8 @@
 package com.company.service.messageService;
 
 import com.company.service.authService.TokenService;
+import com.company.util.getHost.GetHost;
+import com.company.util.getHost.GetHostImpl;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
@@ -10,9 +12,9 @@ import kong.unirest.json.JSONObject;
 
 import java.util.Scanner;
 
-
 public class MessageServiceImpl implements MessageService {
 
+    GetHost host = new GetHostImpl();
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -27,7 +29,7 @@ public class MessageServiceImpl implements MessageService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/addChatroomMessage")
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/addChatroomMessage"))
                     .header("Authorization", TokenService.getToken())
                     .header("Content-Type", "application/json")
                     .body(jsonObject)
@@ -53,7 +55,7 @@ public class MessageServiceImpl implements MessageService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/getChatroomMessages")
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/getChatroomMessages"))
                     .header("Authorization", TokenService.getToken())
                     .header("Content-Type", "application/json")
                     .body(jsonObject)

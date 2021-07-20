@@ -1,13 +1,13 @@
 package com.company.service.clientInteraction;
 
+import com.company.exceptions.InvalidClientInteractionException;
 import com.company.service.authService.AuthService;
 import com.company.service.authService.AuthServiceImpl;
-import com.company.service.exception.InvalidClientInteractionException;
 
 import java.util.Scanner;
 
-import static com.company.util.Constants.LOGIN;
-import static com.company.util.Constants.REGISTER;
+import static com.company.util.constants.Chatroom.LOGIN;
+import static com.company.util.constants.Chatroom.REGISTER;
 
 public class ClientRegisterLoginImpl implements ClientInteractionService {
 

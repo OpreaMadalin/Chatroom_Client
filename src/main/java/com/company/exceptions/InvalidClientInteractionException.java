@@ -1,4 +1,4 @@
-package com.company.service.exception;
+package com.company.exceptions;
 
 public class InvalidClientInteractionException extends Exception {
 

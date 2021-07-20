@@ -1,6 +1,8 @@
 package com.company.service.chatroomService;
 
 import com.company.service.authService.TokenService;
+import com.company.util.getHost.GetHost;
+import com.company.util.getHost.GetHostImpl;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
@@ -10,11 +12,10 @@ import kong.unirest.json.JSONObject;
 
 import java.util.Scanner;
 
-
 public class ChatroomServiceImpl implements ChatroomService {
 
+    GetHost host = new GetHostImpl();
     private final Scanner scanner = new Scanner(System.in);
-
 
     @Override
     public void addChatroom() {
@@ -26,7 +27,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/addChatroom")
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/addChatroom"))
                     .header("Content-Type", "application/json")
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
@@ -47,7 +48,7 @@ public class ChatroomServiceImpl implements ChatroomService {
     public void getChatrooms() {
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.get("http://localhost:8080/getChatrooms")
+            HttpResponse<JsonNode> httpResponse = Unirest.get(host.getHost().concat("/getChatrooms"))
                     .header("Authorization", TokenService.getToken())
                     .asJson();
 
@@ -80,7 +81,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.delete("http://localhost:8080/deleteChatroom")
+            HttpResponse<JsonNode> httpResponse = Unirest.delete(host.getHost().concat("/deleteChatroom"))
                     .header("Content-Type", "application/json")
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
@@ -109,7 +110,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/updateChatroomName")
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/updateChatroomName"))
                     .header("Content-Type", "application/json")
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
@@ -138,7 +139,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         jsonObject.put("newPassword", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/updateChatroomPassword")
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/updateChatroomPassword"))
                     .header("Content-Type", "application/json")
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
@@ -164,7 +165,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         jsonObject.put("adminName", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/addAdmin")
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/addAdmin"))
                     .header("Content-Type", "application/json")
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)
@@ -190,7 +191,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         jsonObject.put("bannedUser", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/banUser")
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/banUser"))
                     .header("Content-Type", "application/json")
                     .header("Authorization", TokenService.getToken())
                     .body(jsonObject)

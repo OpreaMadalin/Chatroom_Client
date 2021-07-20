@@ -1,7 +1,9 @@
 package com.company.service.authService;
 
+import com.company.exceptions.IncorrectCredentialsException;
 import com.company.service.clientInteraction.ClientRegisterLoginImpl;
-import com.company.service.exception.IncorrectCredentialsException;
+import com.company.util.getHost.GetHost;
+import com.company.util.getHost.GetHostImpl;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
@@ -10,12 +12,11 @@ import kong.unirest.json.JSONObject;
 
 import java.util.Scanner;
 
-
 public class AuthServiceImpl implements AuthService {
 
     public static String token;
+    GetHost host = new GetHostImpl();
     private final Scanner scanner = new Scanner(System.in);
-
 
     @Override
     public void register() {
@@ -27,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/register")
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/register"))
                     .header("Content-Type", "application/json")
                     .body(jsonObject)
                     .asJson();
@@ -51,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
         jsonObject.put("password", scanner.nextLine());
 
         try {
-            HttpResponse<JsonNode> httpResponse = Unirest.post("http://localhost:8080/login")
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/login"))
                     .header("Content-Type", "application/json")
                     .body(jsonObject)
                     .asJson();

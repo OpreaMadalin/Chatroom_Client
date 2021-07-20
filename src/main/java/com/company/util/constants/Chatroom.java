@@ -1,6 +1,6 @@
-package com.company.util;
+package com.company.util.constants;
 
-public class Constants {
+public class Chatroom {
 
     public static final int LOGIN = 1;
     public static final int REGISTER = 2;
