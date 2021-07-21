@@ -15,4 +15,6 @@ public interface ChatroomService {
     void addAdmin();
 
     void addBannedUser();
+
+    void listAdmins();
 }

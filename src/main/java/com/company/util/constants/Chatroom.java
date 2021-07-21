@@ -14,6 +14,7 @@ public class Chatroom {
     public static final int VIEW_MESSAGES = 7;
     public static final int ADD_ADMIN = 8;
     public static final int BAN_USER = 9;
+    public static final int LIST_ADMINS = 10;
 
     public static final int LOGOUT = 0;
 }

@@ -207,4 +207,35 @@ public class ChatroomServiceImpl implements ChatroomService {
         }
     }
 
+    @Override
+    public void listAdmins() {
+
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("-- Insert Chatroom Name --");
+        jsonObject.put("chatroomName", scanner.nextLine());
+
+        try {
+            HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/getAdmins"))
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", TokenService.getToken())
+                    .body(jsonObject)
+                    .asJson();
+            boolean getAdmins = httpResponse.isSuccess();
+
+            if (getAdmins) {
+                JSONObject chat = httpResponse.getBody().getObject();
+
+                JSONArray admins = chat.getJSONArray("admins");
+
+                for (int i = 0; i < admins.length(); i++) {
+                    String string = admins.getString(i);
+                    System.out.println("ADMIN: " + string);
+                }
+            } else {
+                System.out.println("You are not admin at this chatroom!");
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
 }

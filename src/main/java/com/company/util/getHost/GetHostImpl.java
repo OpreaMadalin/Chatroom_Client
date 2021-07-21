@@ -10,7 +10,7 @@ public class GetHostImpl implements GetHost {
 
     @Override
     public String getHost() {
-        return server;
+        return local;
     }
 
 }

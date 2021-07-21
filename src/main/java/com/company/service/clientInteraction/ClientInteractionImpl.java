@@ -55,6 +55,9 @@ public class ClientInteractionImpl implements ClientInteractionService {
             case BAN_USER:
                 chatroomService.addBannedUser();
                 break;
+            case LIST_ADMINS:
+                chatroomService.listAdmins();
+                break;
 
             case LOGOUT:
                 ClientRegisterLoginImpl registerLogin = new ClientRegisterLoginImpl();
@@ -76,9 +79,10 @@ public class ClientInteractionImpl implements ClientInteractionService {
         System.out.println("-------- MESSAGE MANAGEMENT --------");
         System.out.println("Add chatroom message - press " + ADD_MESSAGE);
         System.out.println("Show chatroom messages - press " + VIEW_MESSAGES);
-        System.out.println("-------- USERS MANAGEMENT --------");
-        System.out.println("Add chatroom admin - press " + ADD_ADMIN);
-        System.out.println("Add chatroom banned user - press " + BAN_USER);
+        System.out.println("--------- USER MANAGEMENT ----------");
+        System.out.println("Add admin - press " + ADD_ADMIN);
+        System.out.println("Ban user - press " + BAN_USER);
+        System.out.println("List admins - press " + LIST_ADMINS);
         System.out.println("-------------- LOGOUT --------------");
         System.out.println("For logout - press " + LOGOUT);
         System.out.println("------------------------------------");
@@ -87,7 +91,8 @@ public class ClientInteractionImpl implements ClientInteractionService {
             int action = Integer.parseInt(scanner.nextLine());
             if (action != ADD_CHATROOM && action != LIST_CHATROOMS && action != UPDATE_CHATROOM_NAME &&
                     action != UPDATE_CHATROOM_PASSWORD && action != DELETE_CHATROOM && action != ADD_MESSAGE &&
-                    action != VIEW_MESSAGES && action != ADD_ADMIN && action != BAN_USER && action != LOGOUT) {
+                    action != VIEW_MESSAGES && action != ADD_ADMIN && action != BAN_USER && action != LIST_ADMINS &&
+                    action != LOGOUT) {
                 throw new InvalidClientInteractionException();
             }
             return action;
