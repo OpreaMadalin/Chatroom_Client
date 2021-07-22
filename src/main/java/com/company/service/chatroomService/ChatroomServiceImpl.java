@@ -23,8 +23,15 @@ public class ChatroomServiceImpl implements ChatroomService {
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom Name --");
         jsonObject.put("chatroomName", scanner.nextLine());
-        System.out.println("-- Insert Password For Chatroom --");
-        jsonObject.put("password", scanner.nextLine());
+        System.out.println("-- Insert Password For Chatroom? Press 1 for YES or 2 for NO --");
+
+        String result = scanner.nextLine();
+        if (result.equals(String.valueOf(1))) {
+            System.out.println("-- Insert Password --");
+            jsonObject.put("password", scanner.nextLine());
+        } else if (result.equals(String.valueOf(2))) {
+            jsonObject.put("password", "");
+        }
 
         try {
             HttpResponse<JsonNode> httpResponse = Unirest.post(host.getHost().concat("/addChatroom"))
@@ -77,7 +84,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom --");
         jsonObject.put("chatroomName", scanner.nextLine());
-        System.out.println("-- Insert Chatroom Password --");
+        System.out.println("-- Insert Chatroom Password Or Leave it Blank If Doesn't Have One --");
         jsonObject.put("password", scanner.nextLine());
 
         try {
@@ -106,7 +113,7 @@ public class ChatroomServiceImpl implements ChatroomService {
         jsonObject.put("chatroomName", scanner.nextLine());
         System.out.println("-- Insert New Chatroom Name --");
         jsonObject.put("newChatroomName", scanner.nextLine());
-        System.out.println("-- Insert Chatroom Password --");
+        System.out.println("-- Insert Chatroom Password Or Leave it Blank If Doesn't Have One --");
         jsonObject.put("password", scanner.nextLine());
 
         try {
@@ -133,9 +140,9 @@ public class ChatroomServiceImpl implements ChatroomService {
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom Name --");
         jsonObject.put("chatroomName", scanner.nextLine());
-        System.out.println("-- Insert Old Password --");
+        System.out.println("-- Insert Old Password Or Leave It Blank If Doesn't Have One --");
         jsonObject.put("password", scanner.nextLine());
-        System.out.println("-- Insert New Password --");
+        System.out.println("-- Insert New Password Or Leave It Blank For None --");
         jsonObject.put("newPassword", scanner.nextLine());
 
         try {
@@ -238,4 +245,5 @@ public class ChatroomServiceImpl implements ChatroomService {
             e.printStackTrace();
         }
     }
+
 }

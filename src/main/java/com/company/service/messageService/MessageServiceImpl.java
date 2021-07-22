@@ -25,7 +25,7 @@ public class MessageServiceImpl implements MessageService {
         jsonObject.put("chatroomName", scanner.nextLine());
         System.out.println("-- Insert Message --");
         jsonObject.put("message", scanner.nextLine());
-        System.out.println("-- Insert Chatroom Password --");
+        System.out.println("-- Insert Chatroom Password Or Leave it Blank If Doesn't Have One --");
         jsonObject.put("password", scanner.nextLine());
 
         try {
@@ -51,7 +51,7 @@ public class MessageServiceImpl implements MessageService {
         JSONObject jsonObject = new JSONObject();
         System.out.println("-- Insert Chatroom --");
         jsonObject.put("chatroomName", scanner.nextLine());
-        System.out.println("-- Insert Chatroom Password --");
+        System.out.println("-- Insert Chatroom Password Or Leave it Blank If Doesn't Have One --");
         jsonObject.put("password", scanner.nextLine());
 
         try {
