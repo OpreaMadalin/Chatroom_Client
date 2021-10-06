@@ -7,6 +7,7 @@ public class GetHostImpl implements GetHost {
 
     String local = LOCAL_HOST;
     String server = SERVER_HOST;
+    //test
 
     @Override
     public String getHost() {
