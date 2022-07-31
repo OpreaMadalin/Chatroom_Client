@@ -1,1 +1,1 @@
-# OpreaMadalin_FinalProject_Client
+# Chatroom_Client
